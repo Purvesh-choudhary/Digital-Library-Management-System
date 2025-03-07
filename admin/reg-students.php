@@ -40,6 +40,7 @@ header('location:reg-students.php');
     ?>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
+
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
@@ -58,25 +59,39 @@ header('location:reg-students.php');
     <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
 
 </head>
+
 <body>
-      <!------MENU SECTION START-->
-<?php include('includes/header.php');?>
-<!-- MENU SECTION END-->
+    <!------MENU SECTION START-->
+    <?php include('includes/header.php');?>
+    <!-- MENU SECTION END-->
     <div class="content-wrapper">
-         <div class="container">
-        <div class="row pad-botm">
-            <div class="col-md-12">
-                <h4 class="header-line">Manage Reg Students</h4>
-    </div>
+        <div class="container">
+            <div class="row pad-botm">
+                <div class="col-md-12">
+                    <h4 class="header-line">Manage Reg Students</h4>
+                </div>
 
 
-        </div>
+            </div>
             <div class="row">
                 <div class="col-md-12">
                     <!-- Advanced Tables -->
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                          Reg Students
+                            Reg Students
+                            <button class="btn btn-info" style="float:right" onclick="openColumnSelector()">Print Report</button>
+                        </div>
+                        <div id="columnSelector"
+                            style="display:none; padding:10px; border:1px solid #ccc; background:#f9f9f9;">
+                            <h4>Select Columns to Print:</h4>
+                            <label><input type="checkbox" value="0" checked disabled> Sr. No</label><br>
+                            <label><input type="checkbox" value="1" checked> Student ID</label><br>
+                            <label><input type="checkbox" value="2" checked> Student Name</label><br>
+                            <label><input type="checkbox" value="3" checked> Email id</label><br>
+                            <label><input type="checkbox" value="4" checked> Mobile Number</label><br>
+                            <label><input type="checkbox" value="5" checked> Reg Date</label><br>
+                            <label><input type="checkbox" value="6" checked> Status</label><br>
+                            <button class="btn btn-success" onclick="printReport()">Confirm & Print</button>
                         </div>
                         <div class="panel-body">
                             <div class="table-responsive">
@@ -94,22 +109,22 @@ header('location:reg-students.php');
                                         </tr>
                                     </thead>
                                     <tbody>
-<?php $sql = "SELECT * from tblstudents";
-$query = $dbh -> prepare($sql);
-$query->execute();
-$results=$query->fetchAll(PDO::FETCH_OBJ);
-$cnt=1;
-if($query->rowCount() > 0)
-{
-foreach($results as $result)
-{               ?>                                      
+                                        <?php $sql = "SELECT * from tblstudents";
+                                            $query = $dbh -> prepare($sql);
+                                            $query->execute();
+                                            $results=$query->fetchAll(PDO::FETCH_OBJ);
+                                            $cnt=1;
+                                            if($query->rowCount() > 0)
+                                            {
+                                            foreach($results as $result)
+                                            {               ?>
                                         <tr class="odd gradeX">
                                             <td class="center"><?php echo htmlentities($cnt);?></td>
                                             <td class="center"><?php echo htmlentities($result->StudentId);?></td>
                                             <td class="center"><?php echo htmlentities($result->FullName);?></td>
                                             <td class="center"><?php echo htmlentities($result->EmailId);?></td>
                                             <td class="center"><?php echo htmlentities($result->MobileNumber);?></td>
-                                             <td class="center"><?php echo htmlentities($result->RegDate);?></td>
+                                            <td class="center"><?php echo htmlentities($result->RegDate);?></td>
                                             <td class="center"><?php if($result->Status==1)
                                             {
                                                 echo htmlentities("Active");
@@ -120,24 +135,31 @@ foreach($results as $result)
 }
                                             ?></td>
                                             <td class="center">
-<?php if($result->Status==1)
+                                                <?php if($result->Status==1)
  {?>
-<a href="reg-students.php?inid=<?php echo htmlentities($result->id);?>" onclick="return confirm('Are you sure you want to block this student?');" >  <button class="btn btn-danger"> Inactive</button>
-<?php } else {?>
+                                                <a href="reg-students.php?inid=<?php echo htmlentities($result->id);?>"
+                                                    onclick="return confirm('Are you sure you want to block this student?');">
+                                                    <button class="btn btn-danger"> Inactive</button>
+                                                    <?php } else {?>
 
-<a href="reg-students.php?id=<?php echo htmlentities($result->id);?>" onclick="return confirm('Are you sure you want to active this student?');"><button class="btn btn-primary"> Active</button> 
-                                            <?php } ?>
+                                                    <a href="reg-students.php?id=<?php echo htmlentities($result->id);?>"
+                                                        onclick="return confirm('Are you sure you want to active this student?');"><button
+                                                            class="btn btn-primary"> Active</button>
+                                                        <?php } ?>
 
-<a href="student-history.php?stdid=<?php echo htmlentities($result->StudentId);?>"><button class="btn btn-success"> Details</button> 
+                                                        <a
+                                                            href="student-history.php?stdid=<?php echo htmlentities($result->StudentId);?>"><button
+                                                                class="btn btn-success"> Details</button>
 
-                                          
+
                                             </td>
                                         </tr>
- <?php $cnt=$cnt+1;}} ?>                                      
+                                        <?php $cnt=$cnt+1;}} ?>
                                     </tbody>
+
                                 </table>
                             </div>
-                            
+
                         </div>
                     </div>
                     <!--End Advanced Tables -->
@@ -145,13 +167,13 @@ foreach($results as $result)
             </div>
 
 
-            
-    </div>
+
+        </div>
     </div>
 
-     <!-- CONTENT-WRAPPER SECTION END-->
-  <?php include('includes/footer.php');?>
-      <!-- FOOTER SECTION END-->
+    <!-- CONTENT-WRAPPER SECTION END-->
+    <?php include('includes/footer.php');?>
+    <!-- FOOTER SECTION END-->
     <!-- JAVASCRIPT FILES PLACED AT THE BOTTOM TO REDUCE THE LOADING TIME  -->
     <!-- CORE JQUERY  -->
     <script src="assets/js/jquery-1.10.2.js"></script>
@@ -160,8 +182,60 @@ foreach($results as $result)
     <!-- DATATABLE SCRIPTS  -->
     <script src="assets/js/dataTables/jquery.dataTables.js"></script>
     <script src="assets/js/dataTables/dataTables.bootstrap.js"></script>
-      <!-- CUSTOM SCRIPTS  -->
+    <!-- CUSTOM SCRIPTS  -->
     <script src="assets/js/custom.js"></script>
+
+
+
+    <script>
+    function openColumnSelector() {
+        document.getElementById('columnSelector').style.display = 'block';
+    }
+
+    function printReport() {
+        var selectedColumns = [0]; // Always include Sr. No column
+        var checkboxes = document.querySelectorAll('#columnSelector input[type="checkbox"]:not([disabled])');
+        checkboxes.forEach(function(checkbox) {
+            if (checkbox.checked) {
+                selectedColumns.push(parseInt(checkbox.value));
+            }
+        });
+
+        var table = document.getElementById('dataTables-example').cloneNode(true);
+
+        var headers = table.getElementsByTagName('th');
+        for (var i = headers.length - 1; i >= 0; i--) {
+            if (!selectedColumns.includes(i)) {
+                headers[i].style.display = 'none';
+            }
+        }
+
+        var rows = table.getElementsByTagName('tr');
+        for (var i = 0; i < rows.length; i++) {
+            var cells = rows[i].getElementsByTagName('td');
+            for (var j = cells.length - 1; j >= 0; j--) {
+                if (!selectedColumns.includes(j)) {
+                    cells[j].style.display = 'none';
+                }
+            }
+        }
+
+        var printContents = table.outerHTML;
+        var originalContents = document.body.innerHTML;
+
+        document.body.innerHTML = "<html><head><title>Student Report</title></head><body>" +
+            "<h2 style='text-align: center;'>Registered Students Report</h2>" +
+            printContents +
+            "</body></html>";
+
+        window.print();
+        document.body.innerHTML = originalContents;
+        location.reload();
+    }
+    </script>
+
+
 </body>
+
 </html>
 <?php } ?>
