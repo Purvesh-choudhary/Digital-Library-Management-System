@@ -2,145 +2,164 @@
 session_start();
 include('includes/config.php');
 error_reporting(0);
-if(strlen($_SESSION['login'])==0)
-    {   
-header('location:index.php');
-}
-else{ 
-if(isset($_POST['update']))
-{    
-$sid=$_SESSION['stdid'];  
-$fname=$_POST['fullanme'];
-$mobileno=$_POST['mobileno'];
 
-$sql="update tblstudents set FullName=:fname,MobileNumber=:mobileno where StudentId=:sid";
-$query = $dbh->prepare($sql);
-$query->bindParam(':sid',$sid,PDO::PARAM_STR);
-$query->bindParam(':fname',$fname,PDO::PARAM_STR);
-$query->bindParam(':mobileno',$mobileno,PDO::PARAM_STR);
-$query->execute();
+if(strlen($_SESSION['login'])==0) {   
+    header('location:index.php');
+} else { 
+    if(isset($_POST['update'])) {    
+        $sid = $_SESSION['stdid'];  
+        $fname = $_POST['fullanme'];
+        $mobileno = $_POST['mobileno'];
 
-echo '<script>alert("Your profile has been updated")</script>';
-}
+        $sql = "UPDATE tblstudents SET FullName=:fname, MobileNumber=:mobileno WHERE StudentId=:sid";
+        $query = $dbh->prepare($sql);
+        $query->bindParam(':sid', $sid, PDO::PARAM_STR);
+        $query->bindParam(':fname', $fname, PDO::PARAM_STR);
+        $query->bindParam(':mobileno', $mobileno, PDO::PARAM_STR);
+        $query->execute();
 
+        echo '<script>alert("Your profile has been updated")</script>';
+    }
 ?>
 
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html lang="en">
+
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="" />
-    <meta name="author" content="" />
-    <!--[if IE]>
-        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-        <![endif]-->
-    <title>Digital Library Management System | Student Signup</title>
-    <!-- BOOTSTRAP CORE STYLE  -->
-    <link href="assets/css/bootstrap.css" rel="stylesheet" />
-    <!-- FONT AWESOME STYLE  -->
-    <link href="assets/css/font-awesome.css" rel="stylesheet" />
-    <!-- CUSTOM STYLE  -->
-    <link href="assets/css/style.css" rel="stylesheet" />
-    <!-- GOOGLE FONT -->
-    <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' /> 
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Student Profile</title>
+    <link href="assets/css/bootstrap.css" rel="stylesheet">
+    <link href="assets/css/style.css" rel="stylesheet">
+    <style>
+    body {
+        font-family: 'Open Sans', sans-serif;
+        background-color: #e8e8f9;
+    }
 
+    .profile-card {
+        width: 500px;
+        background: white;
+        border-radius: 10px;
+        box-shadow: 2px 2px 20px rgba(0, 0, 0, 0.2);
+        padding: 20px;
+        margin: 50px auto;
+        border: 4px solid #a68cff;
+    }
+
+    .profile-header {
+        background: #a68cff;
+        color: white;
+        padding: 10px;
+        border-radius: 8px;
+        /* font-weight: bold; */
+        text-align: center;
+    }
+
+    .profile-content {
+        display: flex;
+        align-items: center;
+        padding: 15px;
+    }
+
+    .profile-img {
+        width: 150px;
+        height: 150px;
+        border: 4px solid #9170e4;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 40px;
+        color: #555;
+        margin-right: 15px;
+        flex-shrink: 0;
+        padding:5px;
+    }
+    .profile-img img {
+    width: 100%;  /* Adjust width */
+    height: 100%; /* Adjust height */
+    border-radius: 50%; /* Makes it circular */
+    object-fit: cover; /* Ensures the image fits well */
+
+}
+
+    .profile-details {
+        flex: 1;
+    }
+
+    .profile-details label {
+        font-weight: bold;
+    }
+
+    .profile-details p {
+        margin: 3px 0;
+        /* Reduce top and bottom margin */
+        line-height: 1.5;
+        /* Adjust line height (default is around 1.5) */
+    }
+
+    .status {
+        font-weight: bold;
+    }
+
+    .active {
+        color: green;
+    }
+
+    .blocked {
+        color: red;
+    }
+    </style>
 </head>
+
 <body>
-    <!------MENU SECTION START-->
-<?php include('includes/header.php');?>
-<!-- MENU SECTION END-->
-    <div class="content-wrapper">
-         <div class="container">
-        <div class="row pad-botm">
-            <div class="col-md-12">
-                <h4 class="header-line">My Profile</h4>
-                
-                            </div>
+    <?php include('includes/header.php'); ?>
 
+    <div class="profile-card">
+        <div class="profile-header">
+            Student ID: <b><?php echo htmlentities($_SESSION['stdid']); ?></b>
         </div>
-             <div class="row">
-           
-<div class="col-md-9 col-md-offset-1">
-               <div class="panel panel-danger">
-                        <div class="panel-heading">
-                           My Profile
-                        </div>
-                        <div class="panel-body">
-                            <form name="signup" method="post">
-<?php 
-$sid=$_SESSION['stdid'];
-$sql="SELECT StudentId,FullName,EmailId,MobileNumber,RegDate,UpdationDate,Status from  tblstudents  where StudentId=:sid ";
-$query = $dbh -> prepare($sql);
-$query-> bindParam(':sid', $sid, PDO::PARAM_STR);
-$query->execute();
-$results=$query->fetchAll(PDO::FETCH_OBJ);
-$cnt=1;
-if($query->rowCount() > 0)
-{
-foreach($results as $result)
-{               ?>  
 
-<div class="form-group">
-<label>Student ID : </label>
-<?php echo htmlentities($result->StudentId);?>
-</div>
+        <?php 
+            $sid = $_SESSION['stdid'];
+            $sql = "SELECT FullName, EmailId, MobileNumber, RegDate, UpdationDate, Status FROM tblstudents WHERE StudentId=:sid";
+            $query = $dbh->prepare($sql);
+            $query->bindParam(':sid', $sid, PDO::PARAM_STR);
+            $query->execute();
+            $result = $query->fetch(PDO::FETCH_OBJ);
+            if ($result) {
+        ?>
 
-<div class="form-group">
-<label>Reg Date : </label>
-<?php echo htmlentities($result->RegDate);?>
-</div>
-<?php if($result->UpdationDate!=""){?>
-<div class="form-group">
-<label>Last Updation Date : </label>
-<?php echo htmlentities($result->UpdationDate);?>
-</div>
-<?php } ?>
+        <div class="profile-content">
+            <div class="profile-img">
+                <img src="Profile_Pic.jpg" alt="Profile Image">
+            </div>
 
-
-<div class="form-group">
-<label>Profile Status : </label>
-<?php if($result->Status==1){?>
-<span style="color: green">Active</span>
-<?php } else { ?>
-<span style="color: red">Blocked</span>
-<?php }?>
-</div>
-
-
-<div class="form-group">
-<label>Enter Full Name</label>
-<input class="form-control" type="text" name="fullanme" value="<?php echo htmlentities($result->FullName);?>" autocomplete="off" required />
-</div>
-
-
-<div class="form-group">
-<label>Mobile Number :</label>
-<input class="form-control" type="tel" name="mobileno" maxlength="10" value="<?php echo htmlentities($result->MobileNumber);?>" autocomplete="off" required />
-</div>
-                                        
-<div class="form-group">
-<label>Enter Email</label>
-<input class="form-control" type="email" name="email" id="emailid" value="<?php echo htmlentities($result->EmailId);?>"  autocomplete="off" required readonly />
-</div>
-<?php }} ?>
-                              
-<button type="submit" name="update" class="btn btn-primary" id="submit">Update Now </button>
-
-                                    </form>
-                            </div>
-                        </div>
-                            </div>
+            <div class="profile-details">
+                <p><label>Full Name:</label> <?php echo htmlentities($result->FullName); ?></p>
+                <p><label>Phone No:</label> <?php echo htmlentities($result->MobileNumber); ?></p>
+                <p><label>Email:</label> <?php echo htmlentities($result->EmailId); ?></p>
+                <p><label>Reg Date:</label> <?php echo htmlentities($result->RegDate); ?></p>
+                <p><label>Status:</label>
+                    <span class="status <?php echo ($result->Status == 1) ? 'active' : 'blocked'; ?>">
+                        <?php echo ($result->Status == 1) ? 'ACTIVE' : 'BLOCKED'; ?>
+                    </span>
+                </p>
+                <button type="submit" name="update" class="btn btn-primary" id="submit">Update Now
+                </button>
+            </div>
         </div>
+
+        <?php } ?>
+
     </div>
-    </div>
-     <!-- CONTENT-WRAPPER SECTION END-->
-    <?php include('includes/footer.php');?>
+
     <script src="assets/js/jquery-1.10.2.js"></script>
-    <!-- BOOTSTRAP SCRIPTS  -->
     <script src="assets/js/bootstrap.js"></script>
-      <!-- CUSTOM SCRIPTS  -->
     <script src="assets/js/custom.js"></script>
 </body>
+
 </html>
+
 <?php } ?>
