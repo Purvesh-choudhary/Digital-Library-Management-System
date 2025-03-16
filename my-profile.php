@@ -45,14 +45,18 @@ if(strlen($_SESSION['login'])==0) {
         padding: 20px;
         margin: 50px auto;
         border: 4px solid #a68cff;
+        background: linear-gradient(319deg, rgba(255,255,255,1) 0%, rgba(241,241,241,1) 39%, rgba(255,255,255,1) 100%);
     }
 
     .profile-header {
         background: #a68cff;
         color: white;
-        padding: 10px;
+        padding: 8px 0px;
+        /* height: 10px; */
+        /* border:2px solid black; */
         border-radius: 8px;
         /* font-weight: bold; */
+        font-size:16px;
         text-align: center;
     }
 
@@ -95,7 +99,7 @@ if(strlen($_SESSION['login'])==0) {
     .profile-details p {
         margin: 3px 0;
         /* Reduce top and bottom margin */
-        line-height: 1.5;
+        line-height: 1.3;
         /* Adjust line height (default is around 1.5) */
     }
 
@@ -123,7 +127,7 @@ if(strlen($_SESSION['login'])==0) {
 
         <?php 
             $sid = $_SESSION['stdid'];
-            $sql = "SELECT FullName, EmailId, MobileNumber, RegDate, UpdationDate, Status FROM tblstudents WHERE StudentId=:sid";
+            $sql = "SELECT FullName, EmailId, ProfilePic, MobileNumber, RegDate, UpdationDate, Status FROM tblstudents WHERE StudentId=:sid";
             $query = $dbh->prepare($sql);
             $query->bindParam(':sid', $sid, PDO::PARAM_STR);
             $query->execute();
@@ -133,11 +137,12 @@ if(strlen($_SESSION['login'])==0) {
 
         <div class="profile-content">
             <div class="profile-img">
-                <img src="Profile_Pic.jpg" alt="Profile Image">
+                <img src="<?php echo htmlentities($result->ProfilePic); ?>" width="100" alt="Profile Image">
             </div>
 
             <div class="profile-details">
-                <p><label>Full Name:</label> <?php echo htmlentities($result->FullName); ?></p>
+                <p><!-- <label>Full Name:</label>  --><h3 style="font-weight:bold;"><?php echo htmlentities($result->FullName); ?> </h3> 
+                </p>
                 <p><label>Phone No:</label> <?php echo htmlentities($result->MobileNumber); ?></p>
                 <p><label>Email:</label> <?php echo htmlentities($result->EmailId); ?></p>
                 <p><label>Reg Date:</label> <?php echo htmlentities($result->RegDate); ?></p>
