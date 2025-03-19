@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 19, 2025 at 07:45 PM
+-- Generation Time: Mar 19, 2025 at 07:05 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -206,11 +206,11 @@ INSERT INTO `tblstudents` (`id`, `StudentId`, `FullName`, `EmailId`, `ProfilePic
 (9, 'SID010', 'Amit', 'amit@gmail.com', NULL, '8585856224', 'f925916e2754e5e03f75dd58a5733251', 1, '2025-01-14 04:39:12', '2025-01-14 04:39:12'),
 (10, 'SID011', 'Sarita Pandey', 'sarita@gmail.com', NULL, '4672423754', 'f925916e2754e5e03f75dd58a5733251', 1, '2025-01-14 04:39:12', '2025-01-14 04:39:12'),
 (11, 'SID012', 'John Doe', 'john@test.com', NULL, '1234569870', 'f925916e2754e5e03f75dd58a5733251', 1, '2025-01-14 04:39:12', '2025-01-14 04:39:12'),
-(12, 'SID013', 'Jake DD', 'jake@gmal.com', NULL, '1234567890', '81dc9bdb52d04dc20036dbd8313ed055', 0, '2025-01-14 04:39:12', '2025-03-19 18:11:03'),
+(12, 'SID013', 'Jake DD', 'jake@gmal.com', NULL, '1234567890', '81dc9bdb52d04dc20036dbd8313ed055', 1, '2025-01-14 04:39:12', '2025-01-14 04:39:12'),
 (13, 'SID014', 'jon doe', 'jondoe@gmail.com', NULL, '1234697894', '827ccb0eea8a706c4c34a16891f84e7b', 1, '2025-01-14 04:39:12', '2025-01-14 04:39:12'),
-(14, 'SID015', 'Lakki Bavniya', 'lakki@gmail.com', 'assets/img/profilePics/Lakki.jpeg', '9174430648', '74cb1921834d4d68fc2a364aca5beb9b', 1, '2025-03-02 06:10:53', '2025-03-19 18:44:24'),
-(15, 'SID016', 'Vinit Pansare', 'vinitpansare@gmail.com', 'assets/img/profilePics/Vinit.jpeg', '7974809787', '13fccfe77f5f95974d3788e9f5a9c5ac', 1, '2025-03-02 06:11:53', '2025-03-19 18:44:08'),
-(16, 'SID017', 'Abhishek Jaiswal', 'abhi@yo.com', 'assets/img/profilePics/Abhi.png', '12345677889', 'd76f3d05cc9ac98f1f9160274a39fe33', 1, '2025-03-02 17:22:14', '2025-03-19 18:43:47'),
+(14, 'SID015', 'Lakki Bavniya', 'lakki@gmail.com', NULL, '9174430648', '74cb1921834d4d68fc2a364aca5beb9b', 1, '2025-03-02 06:10:53', NULL),
+(15, 'SID016', 'Vinit Pansare', 'vinitpansare@gmail.com', NULL, '7974809787', '13fccfe77f5f95974d3788e9f5a9c5ac', 1, '2025-03-02 06:11:53', NULL),
+(16, 'SID017', 'Abhishek Jaiswal', 'abhi@yo.com', NULL, '12345677889', 'd76f3d05cc9ac98f1f9160274a39fe33', 1, '2025-03-02 17:22:14', '2025-03-16 15:26:30'),
 (17, 'SID018', 'Pravin Prajapati', 'pravin@gmail.com', 'assets/img/profilePics/PravinPrajapati.jpg', '1234567891231', 'c86da2729ab8f79d8f582e9abc469eb0', 1, '2025-03-16 16:56:49', '2025-03-16 18:43:55');
 
 --
