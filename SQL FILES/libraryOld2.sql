@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 19, 2025 at 07:05 PM
+-- Generation Time: Mar 16, 2025 at 08:03 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -87,8 +87,6 @@ CREATE TABLE `tblbooks` (
   `AuthorId` int(11) DEFAULT NULL,
   `ISBNNumber` varchar(25) DEFAULT NULL,
   `BookPrice` decimal(10,2) DEFAULT NULL,
-  `BookQuantity` int(11) NOT NULL DEFAULT 1,
-  `BookAvailQuantity` int(11) NOT NULL DEFAULT 1,
   `bookImage` varchar(250) NOT NULL,
   `isIssued` int(1) DEFAULT NULL,
   `RegDate` timestamp NULL DEFAULT current_timestamp(),
@@ -99,19 +97,17 @@ CREATE TABLE `tblbooks` (
 -- Dumping data for table `tblbooks`
 --
 
-INSERT INTO `tblbooks` (`id`, `BookName`, `CatId`, `AuthorId`, `ISBNNumber`, `BookPrice`, `BookQuantity`, `BookAvailQuantity`, `bookImage`, `isIssued`, `RegDate`, `UpdationDate`) VALUES
-(1, 'PHP And MySql programming', 5, 1, '222333', 20.00, 5, 1, '1efecc0ca822e40b7b673c0d79ae943f.jpg', 1, '2025-01-20 06:18:09', '2025-03-18 19:07:04'),
-(3, 'physics', 6, 4, '1111', 15.00, 1, 1, 'dd8267b57e0e4feee5911cb1e1a03a79.jpg', 0, '2025-01-20 06:18:09', '2025-01-20 06:18:09'),
-(5, 'Murach\'s MySQL', 5, 1, '9350237695', 455.00, 1, 1, '5939d64655b4d2ae443830d73abc35b6.jpg', 1, '2025-01-20 06:18:09', '2025-01-20 06:18:09'),
-(6, 'WordPress for Beginners 2022: A Visual Step-by-Step Guide to Mastering WordPress', 5, 10, 'B019MO3WCM', 100.00, 1, 1, '144ab706ba1cb9f6c23fd6ae9c0502b3.jpg', NULL, '2025-01-20 06:18:09', '2025-03-19 09:57:14'),
-(7, 'WordPress Mastery Guide:', 5, 11, 'B09NKWH7NP', 53.00, 1, 0, '90083a56014186e88ffca10286172e64.jpg', NULL, '2025-01-20 06:18:09', '2025-03-19 09:31:51'),
-(8, 'Rich Dad Poor Dad: What the Rich Teach Their Kids About Money That the Poor and Middle Class Do Not', 8, 12, 'B07C7M8SX9', 120.00, 1, 1, '52411b2bd2a6b2e0df3eb10943a5b640.jpg', 1, '2025-01-20 06:18:09', '2025-03-02 08:02:15'),
-(9, 'The Girl Who Drank the Moon', 8, 13, '1848126476', 200.00, 1, 1, 'f05cd198ac9335245e1fdffa793207a7.jpg', 1, '2025-01-20 06:18:09', '2025-03-02 08:02:31'),
-(10, 'C++: The Complete Reference, 4th Edition', 5, 14, '007053246X', 142.00, 1, 1, '36af5de9012bf8c804e499dc3c3b33a5.jpg', 0, '2025-01-20 06:18:09', '2025-01-20 06:18:09'),
-(11, 'ASP.NET Core 5 for Beginners', 9, 11, 'GBSJ36344563', 422.00, 1, 1, 'b1b6788016bbfab12cfd2722604badc9.jpg', 0, '2025-01-20 06:18:09', '2025-01-20 06:18:09'),
-(12, 'Harry Potter and the Deathly Hallows', 10, 16, '9781338878981', 599.00, 5, 1, 'edcaba6f9ade20413ec8849f954c171e.jpg', 0, '2025-03-02 06:09:06', '2025-03-19 16:05:02'),
-(13, 'Princess Freedom', 11, 13, '123005', 199.00, 7, 1, '7a86edefb1bb523aecca78576607688c.png', NULL, '2025-03-18 18:28:02', '2025-03-18 19:07:45'),
-(14, 'Dune', 11, 14, '1212-987', 150.00, 15, 13, 'b32f5040eeaea572ad397921f38f66f1.jpg', NULL, '2025-03-19 08:39:28', '2025-03-19 18:04:05');
+INSERT INTO `tblbooks` (`id`, `BookName`, `CatId`, `AuthorId`, `ISBNNumber`, `BookPrice`, `bookImage`, `isIssued`, `RegDate`, `UpdationDate`) VALUES
+(1, 'PHP And MySql programming', 5, 1, '222333', 20.00, '1efecc0ca822e40b7b673c0d79ae943f.jpg', 1, '2025-01-20 06:18:09', '2025-01-20 06:18:09'),
+(3, 'physics', 6, 4, '1111', 15.00, 'dd8267b57e0e4feee5911cb1e1a03a79.jpg', 0, '2025-01-20 06:18:09', '2025-01-20 06:18:09'),
+(5, 'Murach\'s MySQL', 5, 1, '9350237695', 455.00, '5939d64655b4d2ae443830d73abc35b6.jpg', 1, '2025-01-20 06:18:09', '2025-01-20 06:18:09'),
+(6, 'WordPress for Beginners 2022: A Visual Step-by-Step Guide to Mastering WordPress', 5, 10, 'B019MO3WCM', 100.00, '144ab706ba1cb9f6c23fd6ae9c0502b3.jpg', NULL, '2025-01-20 06:18:09', '2025-01-20 06:18:09'),
+(7, 'WordPress Mastery Guide:', 5, 11, 'B09NKWH7NP', 53.00, '90083a56014186e88ffca10286172e64.jpg', NULL, '2025-01-20 06:18:09', '2025-01-20 06:18:09'),
+(8, 'Rich Dad Poor Dad: What the Rich Teach Their Kids About Money That the Poor and Middle Class Do Not', 8, 12, 'B07C7M8SX9', 120.00, '52411b2bd2a6b2e0df3eb10943a5b640.jpg', 1, '2025-01-20 06:18:09', '2025-03-02 08:02:15'),
+(9, 'The Girl Who Drank the Moon', 8, 13, '1848126476', 200.00, 'f05cd198ac9335245e1fdffa793207a7.jpg', 1, '2025-01-20 06:18:09', '2025-03-02 08:02:31'),
+(10, 'C++: The Complete Reference, 4th Edition', 5, 14, '007053246X', 142.00, '36af5de9012bf8c804e499dc3c3b33a5.jpg', 0, '2025-01-20 06:18:09', '2025-01-20 06:18:09'),
+(11, 'ASP.NET Core 5 for Beginners', 9, 11, 'GBSJ36344563', 422.00, 'b1b6788016bbfab12cfd2722604badc9.jpg', 0, '2025-01-20 06:18:09', '2025-01-20 06:18:09'),
+(12, 'Harry Potter and the Deathly Hallows', 10, 16, '9781338878981', 599.00, 'edcaba6f9ade20413ec8849f954c171e.jpg', 0, '2025-03-02 06:09:06', '2025-03-02 06:20:30');
 
 -- --------------------------------------------------------
 
@@ -170,11 +166,7 @@ INSERT INTO `tblissuedbookdetails` (`id`, `BookId`, `StudentID`, `IssuesDate`, `
 (12, 10, 'SID012', '2024-02-01 05:45:57', '2025-02-06 05:37:12', 1, 5),
 (13, 12, 'SID015', '2025-03-02 06:18:05', '2025-03-02 06:20:30', 1, 10),
 (14, 8, 'SID016', '2025-03-02 08:02:15', NULL, NULL, NULL),
-(15, 9, 'SID016', '2025-03-02 08:02:31', NULL, NULL, NULL),
-(16, NULL, 'SID002', '2025-03-19 08:16:02', NULL, NULL, NULL),
-(17, 6, 'SID002', '2025-03-19 09:33:14', NULL, NULL, NULL),
-(18, 14, 'SID016', '2025-03-19 10:01:51', '2025-03-19 11:34:12', 0, NULL),
-(19, 14, 'SID016', '2025-03-19 10:02:37', NULL, NULL, NULL);
+(15, 9, 'SID016', '2025-03-02 08:02:31', NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -274,7 +266,7 @@ ALTER TABLE `tblauthors`
 -- AUTO_INCREMENT for table `tblbooks`
 --
 ALTER TABLE `tblbooks`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `tblcategory`
@@ -286,7 +278,7 @@ ALTER TABLE `tblcategory`
 -- AUTO_INCREMENT for table `tblissuedbookdetails`
 --
 ALTER TABLE `tblissuedbookdetails`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `tblstudents`
