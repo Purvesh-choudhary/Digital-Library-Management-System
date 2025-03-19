@@ -38,7 +38,11 @@ if(isset($_POST['update']))
     $result = $query->fetch(PDO::FETCH_OBJ);
 
 if ($result) {
+    
     $bookAvailQuantity = $result->BookAvailQuantity; // Store the available quantity
+    echo "<script>alert('Error: Book ABAIL QTY -  ($bookAvailQuantity).');</script>";
+    echo "<script>alert('Error: Book TOTAL QTY -  ($quantity).');</script>";
+
 } else {
     $bookAvailQuantity = 0; // Default if book not found
 }
@@ -47,22 +51,30 @@ if ($result) {
     if ($quantity < $issuedBooks) {
         echo "<script>alert('Error: New quantity cannot be less than issued books ($issuedBooks).');</script>";
     } else {
-        // Proceed with update
+        echo "<script>alert('Error:PROCEDDING FURTHER ');</script>";
 
+        // Proceed with update
+        if($bookAvailQuantity > $quantity){
+            $bookAvailQuantity = $quantity;
+        }else if($bookAvailQuantity == $quantity){
+            $bookAvailQuantity = 0;
+        }else if ($bookAvailQuantity < $quantity){
+            $bookAvailQuantity = $quantity - $issuedBooks;
+        }
+        echo "<script>alert('Error: Book ABAIL QTY After PROCESS -  ($bookAvailQuantity).');</script>";
         
         $sql = "UPDATE tblbooks SET BookName=:bookname, CatId=:category, AuthorId=:author, ISBNNumber=:isbn, 
-                BookPrice=:price, BookQuantity=:quantity WHERE id=:bookid";
+                BookPrice=:price, BookQuantity=:quantity, BookAvailQuantity=:bookAvailQuantity WHERE id=:bookid";
         $query = $dbh->prepare($sql);
         $query->bindParam(':bookname', $bookname, PDO::PARAM_STR);
         $query->bindParam(':category', $category, PDO::PARAM_STR);
         $query->bindParam(':author', $author, PDO::PARAM_STR);
         $query->bindParam(':isbn', $isbn, PDO::PARAM_STR);
         $query->bindParam(':quantity', $quantity, PDO::PARAM_STR);
+        $query->bindParam(':bookAvailQuantity', $bookAvailQuantity, PDO::PARAM_STR);
         $query->bindParam(':price', $price, PDO::PARAM_STR);
         $query->bindParam(':bookid', $bookid, PDO::PARAM_STR);
         $query->execute();
-
-        //if($quantity < )
         
         echo "<script>alert('Book info updated successfully');</script>";
         echo "<script>window.location.href='manage-books.php'</script>";
@@ -237,14 +249,14 @@ else
                                                         $query = $dbh->prepare($sql);
                                                         $query->bindParam(':bookid', $bookid, PDO::PARAM_INT);
                                                         $query->execute();
-                                                        $result = $query->fetch(PDO::FETCH_OBJ);
-                                                        $issuedBooks = $result->issuedCount;
+                                                        $result2 = $query->fetch(PDO::FETCH_OBJ);
+                                                        $issuedBooks = $result2->issuedCount;
                                                         
                                                 echo htmlentities($issuedBooks); ?>)
                                              </span>
                                         </label>
                                         <input class="form-control" type="number" name="quantity" min="1"
-                                            value="<?php echo htmlentities($result->BookQuantity); ?>"
+                                            value="<?php echo htmlentities($result->BookQuantity);?>"
                                             required="required" />
                                         <p class="help-block">You cannot decrease the quantity below the Issued Books.
                                         </p>
