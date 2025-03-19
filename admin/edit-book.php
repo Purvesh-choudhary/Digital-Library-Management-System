@@ -10,28 +10,67 @@ else{
 
 if(isset($_POST['update']))
 {
-$bookname=$_POST['bookname'];
-$category=$_POST['category'];
-$author=$_POST['author'];
-$isbn=$_POST['isbn'];
-$price=$_POST['price'];
-$quantity=$_POST['quantity'];
-$bookid=intval($_GET['bookid']);
-$sql="update  tblbooks set BookName=:bookname,CatId=:category,AuthorId=:author,ISBNNumber=:isbn,BookPrice=:price,BookQuantity=:quantity where id=:bookid";
-$query = $dbh->prepare($sql);
-$query->bindParam(':bookname',$bookname,PDO::PARAM_STR);
-$query->bindParam(':category',$category,PDO::PARAM_STR);
-$query->bindParam(':author',$author,PDO::PARAM_STR);
-$query->bindParam(':isbn', $isbn, PDO::PARAM_STR);
-$query->bindParam(':quantity', $quantity, PDO::PARAM_STR);
-$query->bindParam(':price',$price,PDO::PARAM_STR);
-$query->bindParam(':bookid',$bookid,PDO::PARAM_STR);
-$query->execute();
-echo "<script>alert('Book info updated successfully');</script>";
-echo "<script>window.location.href='manage-books.php'</script>";
+    $bookname=$_POST['bookname'];
+    $category=$_POST['category'];
+    $author=$_POST['author'];
+    $isbn=$_POST['isbn'];
+    $price=$_POST['price'];
+    $quantity=$_POST['quantity'];
+    $bookid=intval($_GET['bookid']);
+
+
+    // Get issued book count from issued table
+    $sql = "SELECT COUNT(*) as issuedCount 
+            FROM tblissuedbookdetails 
+            WHERE BookId =:bookid AND (ReturnStatus = 0 OR ReturnStatus IS NULL);";
+    $query = $dbh->prepare($sql);
+    $query->bindParam(':bookid', $bookid, PDO::PARAM_INT);
+    $query->execute();
+    $result = $query->fetch(PDO::FETCH_OBJ);
+    $issuedBooks = $result->issuedCount;
+
+
+    // Get Available Quantity from Book table
+    $sql = "SELECT BookAvailQuantity FROM tblbooks WHERE id=:bookid";
+    $query = $dbh->prepare($sql);
+    $query->bindParam(':bookid', $bookid, PDO::PARAM_INT);
+    $query->execute();
+    $result = $query->fetch(PDO::FETCH_OBJ);
+
+if ($result) {
+    $bookAvailQuantity = $result->BookAvailQuantity; // Store the available quantity
+} else {
+    $bookAvailQuantity = 0; // Default if book not found
+}
+
+    // Validation: Ensure new quantity is >= issued books
+    if ($quantity < $issuedBooks) {
+        echo "<script>alert('Error: New quantity cannot be less than issued books ($issuedBooks).');</script>";
+    } else {
+        // Proceed with update
+
+        
+        $sql = "UPDATE tblbooks SET BookName=:bookname, CatId=:category, AuthorId=:author, ISBNNumber=:isbn, 
+                BookPrice=:price, BookQuantity=:quantity WHERE id=:bookid";
+        $query = $dbh->prepare($sql);
+        $query->bindParam(':bookname', $bookname, PDO::PARAM_STR);
+        $query->bindParam(':category', $category, PDO::PARAM_STR);
+        $query->bindParam(':author', $author, PDO::PARAM_STR);
+        $query->bindParam(':isbn', $isbn, PDO::PARAM_STR);
+        $query->bindParam(':quantity', $quantity, PDO::PARAM_STR);
+        $query->bindParam(':price', $price, PDO::PARAM_STR);
+        $query->bindParam(':bookid', $bookid, PDO::PARAM_STR);
+        $query->execute();
+
+        //if($quantity < )
+        
+        echo "<script>alert('Book info updated successfully');</script>";
+        echo "<script>window.location.href='manage-books.php'</script>";
+    }
 
 
 }
+
 ?>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -76,7 +115,7 @@ echo "<script>window.location.href='manage-books.php'</script>";
                             <form role="form" method="post">
                                 <?php 
 $bookid=intval($_GET['bookid']);
-$sql = "SELECT tblbooks.BookName,tblbooks.BookQuantity, tblcategory.CategoryName,tblcategory.id as cid,tblauthors.AuthorName,tblauthors.id as athrid,tblbooks.ISBNNumber,tblbooks.BookPrice,tblbooks.id as bookid,tblbooks.bookImage from  tblbooks join tblcategory on tblcategory.id=tblbooks.CatId join tblauthors on tblauthors.id=tblbooks.AuthorId where tblbooks.id=:bookid";
+$sql = "SELECT tblbooks.BookName,tblbooks.BookQuantity,tblbooks.BookAvailQuantity, tblcategory.CategoryName,tblcategory.id as cid,tblauthors.AuthorName,tblauthors.id as athrid,tblbooks.ISBNNumber,tblbooks.BookPrice,tblbooks.id as bookid,tblbooks.bookImage from  tblbooks join tblcategory on tblcategory.id=tblbooks.CatId join tblauthors on tblauthors.id=tblbooks.AuthorId where tblbooks.id=:bookid";
 $query = $dbh -> prepare($sql);
 $query->bindParam(':bookid',$bookid,PDO::PARAM_STR);
 $query->execute();
@@ -142,7 +181,7 @@ else
                                             <option value="<?php echo htmlentities($result->athrid);?>">
                                                 <?php echo htmlentities($athrname=$result->AuthorName);?>
                                             </option>
-                                                <?php 
+                                            <?php 
 
                                                     $sql2 = "SELECT * from  tblauthors ";
                                                     $query2 = $dbh -> prepare($sql2);
@@ -185,14 +224,32 @@ else
                                             required="required" />
                                     </div>
                                 </div>
+
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label>Quantity<span style="color:red;">*</span></label>
+                                        <label>Total Quantity <span style="color:red;">*</span> <span
+                                                style="color:purple;"> (Issued Books:
+                                                <?php  
+
+                                                        $sql = "SELECT COUNT(*) as issuedCount 
+                                                        FROM tblissuedbookdetails 
+                                                        WHERE BookId =:bookid AND (ReturnStatus = 0 OR ReturnStatus IS NULL);";
+                                                        $query = $dbh->prepare($sql);
+                                                        $query->bindParam(':bookid', $bookid, PDO::PARAM_INT);
+                                                        $query->execute();
+                                                        $result = $query->fetch(PDO::FETCH_OBJ);
+                                                        $issuedBooks = $result->issuedCount;
+                                                        
+                                                echo htmlentities($issuedBooks); ?>)
+                                            </span></label>
                                         <input class="form-control" type="number" name="quantity" min="1"
-                                            value="<?php echo htmlentities($result->BookQuantity);?>"
+                                            value="<?php echo htmlentities($result->BookQuantity); ?>"
                                             required="required" />
+                                        <p class="help-block">You cannot decrease the quantity below the Issued Books.
+                                        </p>
                                     </div>
                                 </div>
+
                                 <?php }} ?><div class="col-md-12">
                                     <button type="submit" name="update" class="btn btn-info">Update </button>
                                 </div>

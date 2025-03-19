@@ -76,12 +76,13 @@ header('location:manage-books.php');
                                             <th>ISBN</th>
                                             <th>Price</th>
                                             <th>Quantity</th>
+                                            <th>Avail.Qty</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <?php 
-$sql = "SELECT tblbooks.BookName,tblcategory.CategoryName,tblauthors.AuthorName,tblbooks.ISBNNumber,tblbooks.BookPrice,tblbooks.BookQuantity,tblbooks.id as bookid,tblbooks.bookImage from  tblbooks join tblcategory on tblcategory.id=tblbooks.CatId join tblauthors on tblauthors.id=tblbooks.AuthorId";
+$sql = "SELECT tblbooks.BookName,tblcategory.CategoryName,tblauthors.AuthorName,tblbooks.ISBNNumber,tblbooks.BookPrice,tblbooks.BookQuantity,tblbooks.BookAvailQuantity,tblbooks.id as bookid,tblbooks.bookImage from  tblbooks join tblcategory on tblcategory.id=tblbooks.CatId join tblauthors on tblauthors.id=tblbooks.AuthorId";
 
 // $sql = "SELECT tblbooks.BookName, tblcategory.CategoryName, tblauthors.AuthorName, tblbooks.ISBNNumber, tblbooks.BookPrice, tblbooks.Quantity, tblbooks.id as bookid, tblbooks.bookImage FROM tblbooks JOIN tblcategory ON tblcategory.id = tblbooks.CatId JOIN tblauthors ON tblauthors.id = tblbooks.AuthorId";
 
@@ -106,6 +107,7 @@ foreach($results as $result)
                                             <td class="center"><?php echo htmlentities($result->ISBNNumber);?></td>
                                             <td class="center"><?php echo htmlentities($result->BookPrice);?></td>
                                             <td class="center"><?php echo htmlentities($result->BookQuantity);?></td>
+                                            <td class="center"><?php echo htmlentities($result->BookAvailQuantity);?></td>
                                             <td class="center">
 
                                                 <a

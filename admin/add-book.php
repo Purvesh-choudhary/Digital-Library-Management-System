@@ -16,6 +16,7 @@ $author=$_POST['author'];
 $isbn=$_POST['isbn'];
 $price=$_POST['price'];
 $quantity = $_POST['quantity'];
+$availquantity = $_POST['quantity'];
 $bookimg=$_FILES["bookpic"]["name"];
 
 // get the image extension
@@ -34,7 +35,7 @@ echo "<script>alert('Invalid format. Only jpg / jpeg/ png /gif format allowed');
 else
 {
 move_uploaded_file($_FILES["bookpic"]["tmp_name"],"bookimg/".$imgnewname);
-$sql="INSERT INTO  tblbooks(BookName,CatId,AuthorId,ISBNNumber,BookPrice,bookImage,BookQuantity) VALUES(:bookname,:category,:author,:isbn,:price,:imgnewname,:quantity)";
+$sql="INSERT INTO  tblbooks(BookName,CatId,AuthorId,ISBNNumber,BookPrice,bookImage,BookQuantity,BookAvailQuantity) VALUES(:bookname,:category,:author,:isbn,:price,:imgnewname,:quantity,:availquantity)";
 $query = $dbh->prepare($sql);
 $query->bindParam(':bookname',$bookname,PDO::PARAM_STR);
 $query->bindParam(':category',$category,PDO::PARAM_STR);
@@ -43,6 +44,7 @@ $query->bindParam(':isbn',$isbn,PDO::PARAM_STR);
 $query->bindParam(':price',$price,PDO::PARAM_STR);
 $query->bindParam(':imgnewname',$imgnewname,PDO::PARAM_STR);
 $query->bindParam(':quantity', $quantity, PDO::PARAM_INT);
+$query->bindParam(':availquantity', $availquantity, PDO::PARAM_INT);
 $query->execute();
 $lastInsertId = $dbh->lastInsertId();
 if($lastInsertId)
