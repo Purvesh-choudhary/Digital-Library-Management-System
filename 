@@ -1,0 +1,60 @@
+[33mcommit f17bc00c41ebb16dff291724ea4f298e4fdcfdf4[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmaster[m[33m, [m[1;31morigin/master[m[33m)[m
+Author: Purveh Choudhary <98455640+Purvesh-choudhary@users.noreply.github.com>
+Date:   Wed Mar 19 18:43:15 2025 +0530
+
+    add Book Id SYSTEM
+
+[33mcommit 06a57620253e1dbe6f371d8a02b1178529062e00[m
+Merge: 80ee33d 8824389
+Author: Purveh Choudhary <98455640+Purvesh-choudhary@users.noreply.github.com>
+Date:   Wed Mar 19 00:50:07 2025 +0530
+
+    Merge branch 'master' of https://github.com/Purvesh-choudhary/Digital-Library-Management-System
+
+[33mcommit 80ee33d3fad4368c9a88f6b5b9a9943cc2bc90d4[m
+Author: Purveh Choudhary <98455640+Purvesh-choudhary@users.noreply.github.com>
+Date:   Wed Mar 19 00:46:00 2025 +0530
+
+    adding book Quantity
+
+[33mcommit 8824389a088341abb7cd6f4637bff60e47db9c3f[m
+Author: Purveh Choudhary <98455640+Purvesh-choudhary@users.noreply.github.com>
+Date:   Mon Mar 17 17:31:13 2025 +0530
+
+    Create php.yml
+
+[33mcommit f1335757c0eed7a2a23eb95d04c215f94f4b587a[m
+Author: Purveh Choudhary <98455640+Purvesh-choudhary@users.noreply.github.com>
+Date:   Mon Mar 17 00:35:41 2025 +0530
+
+    updated DB
+
+[33mcommit 6796a878bad5cbcce961a17cbd4090a71d17cba1[m
+Author: Purveh Choudhary <98455640+Purvesh-choudhary@users.noreply.github.com>
+Date:   Mon Mar 17 00:32:30 2025 +0530
+
+    Profile Picture WOrk Done
+
+[33mcommit 47135a8bf7301734117f7c259b43227746a4590c[m
+Author: Purveh Choudhary <98455640+Purvesh-choudhary@users.noreply.github.com>
+Date:   Sun Mar 16 23:04:19 2025 +0530
+
+    modifying profile and adding upload pic
+
+[33mcommit f76c98e51b804a1b97b5cf39cdd3280917430f07[m
+Author: Purveh Choudhary <98455640+Purvesh-choudhary@users.noreply.github.com>
+Date:   Sun Mar 16 21:14:03 2025 +0530
+
+    ADDED PROFILE CARD
+
+[33mcommit d998b084c6364f57ddf91897648be38d98e6cb4e[m
+Author: Purveh Choudhary <98455640+Purvesh-choudhary@users.noreply.github.com>
+Date:   Fri Mar 7 23:54:36 2025 +0530
+
+    added Print Method
+
+[33mcommit f4a171696bb985598e99458b508d7973a32488a5[m
+Author: Purveh Choudhary <98455640+Purvesh-choudhary@users.noreply.github.com>
+Date:   Wed Mar 5 19:03:13 2025 +0530
+
+    adding files
