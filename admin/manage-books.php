@@ -63,6 +63,20 @@ header('location:manage-books.php');
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             Books Listing
+                            <button class="btn btn-info" style="float:right" onclick="openColumnSelector()">Print Report</button>
+                        </div>
+                        <div id="columnSelector"
+                            style="display:none; padding:10px; border:1px solid #ccc; background:#f9f9f9;">
+                            <h4>Select Columns to Print:</h4>
+                            <label><input type="checkbox" value="0" checked disabled> Sr. No</label><br>
+                            <label><input type="checkbox" value="1" checked> Book Name</label><br>
+                            <label><input type="checkbox" value="2" checked> Category</label><br>
+                            <label><input type="checkbox" value="3" checked> Author</label><br>
+                            <label><input type="checkbox" value="4" checked> ISBN</label><br>
+                            <label><input type="checkbox" value="5" checked> Price</label><br>
+                            <label><input type="checkbox" value="6" checked> Total Quantity</label><br>
+                            <label><input type="checkbox" value="6" checked> Avail.Qty</label><br>
+                            <button class="btn btn-success" onclick="printReport()">Confirm & Print</button>
                         </div>
                         <div class="panel-body">
                             <div class="table-responsive">
@@ -75,7 +89,7 @@ header('location:manage-books.php');
                                             <th>Author</th>
                                             <th>ISBN</th>
                                             <th>Price</th>
-                                            <th>Quantity</th>
+                                            <th>Total Quantity</th>
                                             <th>Avail.Qty</th>
                                             <th>Action</th>
                                         </tr>
@@ -139,6 +153,53 @@ foreach($results as $result)
     <?php include('includes/footer.php');?>
     <!-- FOOTER SECTION END-->
     <!-- JAVASCRIPT FILES PLACED AT THE BOTTOM TO REDUCE THE LOADING TIME  -->
+
+    <script>
+    function openColumnSelector() {
+        document.getElementById('columnSelector').style.display = 'block';
+    }
+
+    function printReport() {
+        var selectedColumns = [0]; // Always include Sr. No column
+        var checkboxes = document.querySelectorAll('#columnSelector input[type="checkbox"]:not([disabled])');
+        checkboxes.forEach(function(checkbox) {
+            if (checkbox.checked) {
+                selectedColumns.push(parseInt(checkbox.value));
+            }
+        });
+
+        var table = document.getElementById('dataTables-example').cloneNode(true);
+
+        var headers = table.getElementsByTagName('th');
+        for (var i = headers.length - 1; i >= 0; i--) {
+            if (!selectedColumns.includes(i)) {
+                headers[i].style.display = 'none';
+            }
+        }
+
+        var rows = table.getElementsByTagName('tr');
+        for (var i = 0; i < rows.length; i++) {
+            var cells = rows[i].getElementsByTagName('td');
+            for (var j = cells.length - 1; j >= 0; j--) {
+                if (!selectedColumns.includes(j)) {
+                    cells[j].style.display = 'none';
+                }
+            }
+        }
+
+        var printContents = table.outerHTML;
+        var originalContents = document.body.innerHTML;
+
+        document.body.innerHTML = "<html><head><title>Books Report</title></head><body>" +
+            "<h2 style='text-align: center;'>Books Report</h2>" +
+            printContents +
+            "</body></html>";
+
+        window.print();
+        document.body.innerHTML = originalContents;
+        location.reload();
+    }
+    </script>
     <!-- CORE JQUERY  -->
     <script src="assets/js/jquery-1.10.2.js"></script>
     <!-- BOOTSTRAP SCRIPTS  -->

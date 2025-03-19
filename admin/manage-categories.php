@@ -23,6 +23,7 @@ header('location:manage-categories.php');
     ?>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
+
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
@@ -41,70 +42,83 @@ header('location:manage-categories.php');
     <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
 
 </head>
+
 <body>
-      <!------MENU SECTION START-->
-<?php include('includes/header.php');?>
-<!-- MENU SECTION END-->
+    <!------MENU SECTION START-->
+    <?php include('includes/header.php');?>
+    <!-- MENU SECTION END-->
     <div class="content-wrapper">
-         <div class="container">
-        <div class="row pad-botm">
-            <div class="col-md-12">
-                <h4 class="header-line">Manage Categories</h4>
-    </div>
-     <div class="row">
-    <?php if($_SESSION['error']!="")
+        <div class="container">
+            <div class="row pad-botm">
+                <div class="col-md-12">
+                    <h4 class="header-line">Manage Categories</h4>
+                </div>
+                <div class="row">
+                    <?php if($_SESSION['error']!="")
     {?>
-<div class="col-md-6">
-<div class="alert alert-danger" >
- <strong>Error :</strong> 
- <?php echo htmlentities($_SESSION['error']);?>
-<?php echo htmlentities($_SESSION['error']="");?>
-</div>
-</div>
-<?php } ?>
-<?php if($_SESSION['msg']!="")
+                    <div class="col-md-6">
+                        <div class="alert alert-danger">
+                            <strong>Error :</strong>
+                            <?php echo htmlentities($_SESSION['error']);?>
+                            <?php echo htmlentities($_SESSION['error']="");?>
+                        </div>
+                    </div>
+                    <?php } ?>
+                    <?php if($_SESSION['msg']!="")
 {?>
-<div class="col-md-6">
-<div class="alert alert-success" >
- <strong>Success :</strong> 
- <?php echo htmlentities($_SESSION['msg']);?>
-<?php echo htmlentities($_SESSION['msg']="");?>
-</div>
-</div>
-<?php } ?>
-<?php if($_SESSION['updatemsg']!="")
+                    <div class="col-md-6">
+                        <div class="alert alert-success">
+                            <strong>Success :</strong>
+                            <?php echo htmlentities($_SESSION['msg']);?>
+                            <?php echo htmlentities($_SESSION['msg']="");?>
+                        </div>
+                    </div>
+                    <?php } ?>
+                    <?php if($_SESSION['updatemsg']!="")
 {?>
-<div class="col-md-6">
-<div class="alert alert-success" >
- <strong>Success :</strong> 
- <?php echo htmlentities($_SESSION['updatemsg']);?>
-<?php echo htmlentities($_SESSION['updatemsg']="");?>
-</div>
-</div>
-<?php } ?>
+                    <div class="col-md-6">
+                        <div class="alert alert-success">
+                            <strong>Success :</strong>
+                            <?php echo htmlentities($_SESSION['updatemsg']);?>
+                            <?php echo htmlentities($_SESSION['updatemsg']="");?>
+                        </div>
+                    </div>
+                    <?php } ?>
 
 
-   <?php if($_SESSION['delmsg']!="")
+                    <?php if($_SESSION['delmsg']!="")
     {?>
-<div class="col-md-6">
-<div class="alert alert-success" >
- <strong>Success :</strong> 
- <?php echo htmlentities($_SESSION['delmsg']);?>
-<?php echo htmlentities($_SESSION['delmsg']="");?>
-</div>
-</div>
-<?php } ?>
+                    <div class="col-md-6">
+                        <div class="alert alert-success">
+                            <strong>Success :</strong>
+                            <?php echo htmlentities($_SESSION['delmsg']);?>
+                            <?php echo htmlentities($_SESSION['delmsg']="");?>
+                        </div>
+                    </div>
+                    <?php } ?>
 
-</div>
+                </div>
 
 
-        </div>
+            </div>
             <div class="row">
                 <div class="col-md-12">
                     <!-- Advanced Tables -->
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                           Categories Listing
+                            Categories Listing
+                            <button class="btn btn-info" style="float:right" onclick="openColumnSelector()">Print Report</button>
+
+                        </div>
+                        <div id="columnSelector"
+                            style="display:none; padding:10px; border:1px solid #ccc; background:#f9f9f9;">
+                            <h4>Select Columns to Print:</h4>
+                            <label><input type="checkbox" value="0" checked disabled> Sr. No</label><br>
+                            <label><input type="checkbox" value="1" checked> Category</label><br>
+                            <label><input type="checkbox" value="2" checked> Status</label><br>
+                            <label><input type="checkbox" value="3" checked> Creation Date</label><br>
+                            <label><input type="checkbox" value="4" checked> Updation Date</label><br>
+                            <button class="btn btn-success" onclick="printReport()">Confirm & Print</button>
                         </div>
                         <div class="panel-body">
                             <div class="table-responsive">
@@ -120,7 +134,7 @@ header('location:manage-categories.php');
                                         </tr>
                                     </thead>
                                     <tbody>
-<?php $sql = "SELECT * from  tblcategory";
+                                        <?php $sql = "SELECT * from  tblcategory";
 $query = $dbh -> prepare($sql);
 $query->execute();
 $results=$query->fetchAll(PDO::FETCH_OBJ);
@@ -128,28 +142,34 @@ $cnt=1;
 if($query->rowCount() > 0)
 {
 foreach($results as $result)
-{               ?>                                      
+{               ?>
                                         <tr class="odd gradeX">
                                             <td class="center"><?php echo htmlentities($cnt);?></td>
                                             <td class="center"><?php echo htmlentities($result->CategoryName);?></td>
                                             <td class="center"><?php if($result->Status==1) {?>
-                                            <a href="#" class="btn btn-success btn-xs">Active</a>
-                                            <?php } else {?>
-                                            <a href="#" class="btn btn-danger btn-xs">Inactive</a>
-                                            <?php } ?></td>
+                                                <a href="#" class="btn btn-success btn-xs">Active</a>
+                                                <?php } else {?>
+                                                <a href="#" class="btn btn-danger btn-xs">Inactive</a>
+                                                <?php } ?>
+                                            </td>
                                             <td class="center"><?php echo htmlentities($result->CreationDate);?></td>
                                             <td class="center"><?php echo htmlentities($result->UpdationDate);?></td>
                                             <td class="center">
 
-                                            <a href="edit-category.php?catid=<?php echo htmlentities($result->id);?>"><button class="btn btn-primary"><i class="fa fa-edit "></i> Edit</button> 
-                                          <a href="manage-categories.php?del=<?php echo htmlentities($result->id);?>" onclick="return confirm('Are you sure you want to delete?');"" >  <button class="btn btn-danger"><i class="fa fa-pencil"></i> Delete</button>
+                                                <a
+                                                    href="edit-category.php?catid=<?php echo htmlentities($result->id);?>"><button
+                                                        class="btn btn-primary"><i class="fa fa-edit "></i>
+                                                        Edit</button>
+                                                    <a href="manage-categories.php?del=<?php echo htmlentities($result->id);?>"
+                                                        onclick="return confirm('Are you sure you want to delete?');"" >  <button class="
+                                                        btn btn-danger"><i class="fa fa-pencil"></i> Delete</button>
                                             </td>
                                         </tr>
- <?php $cnt=$cnt+1;}} ?>                                      
+                                        <?php $cnt=$cnt+1;}} ?>
                                     </tbody>
                                 </table>
                             </div>
-                            
+
                         </div>
                     </div>
                     <!--End Advanced Tables -->
@@ -157,14 +177,64 @@ foreach($results as $result)
             </div>
 
 
-            
-    </div>
+
+        </div>
     </div>
 
-     <!-- CONTENT-WRAPPER SECTION END-->
-  <?php include('includes/footer.php');?>
-      <!-- FOOTER SECTION END-->
+    <!-- CONTENT-WRAPPER SECTION END-->
+    <?php include('includes/footer.php');?>
+    <!-- FOOTER SECTION END-->
     <!-- JAVASCRIPT FILES PLACED AT THE BOTTOM TO REDUCE THE LOADING TIME  -->
+
+    <script>
+    function openColumnSelector() {
+        document.getElementById('columnSelector').style.display = 'block';
+    }
+
+    function printReport() {
+        var selectedColumns = [0]; // Always include Sr. No column
+        var checkboxes = document.querySelectorAll('#columnSelector input[type="checkbox"]:not([disabled])');
+        checkboxes.forEach(function(checkbox) {
+            if (checkbox.checked) {
+                selectedColumns.push(parseInt(checkbox.value));
+            }
+        });
+
+        var table = document.getElementById('dataTables-example').cloneNode(true);
+
+        var headers = table.getElementsByTagName('th');
+        for (var i = headers.length - 1; i >= 0; i--) {
+            if (!selectedColumns.includes(i)) {
+                headers[i].style.display = 'none';
+            }
+        }
+
+        var rows = table.getElementsByTagName('tr');
+        for (var i = 0; i < rows.length; i++) {
+            var cells = rows[i].getElementsByTagName('td');
+            for (var j = cells.length - 1; j >= 0; j--) {
+                if (!selectedColumns.includes(j)) {
+                    cells[j].style.display = 'none';
+                }
+            }
+        }
+
+        var printContents = table.outerHTML;
+        var originalContents = document.body.innerHTML;
+
+        document.body.innerHTML = "<html><head><title>Category Report</title></head><body>" +
+            "<h2 style='text-align: center;'>Category Report</h2>" +
+            printContents +
+            "</body></html>";
+
+        window.print();
+        document.body.innerHTML = originalContents;
+        location.reload();
+    }
+    </script>
+
+
+
     <!-- CORE JQUERY  -->
     <script src="assets/js/jquery-1.10.2.js"></script>
     <!-- BOOTSTRAP SCRIPTS  -->
@@ -172,8 +242,9 @@ foreach($results as $result)
     <!-- DATATABLE SCRIPTS  -->
     <script src="assets/js/dataTables/jquery.dataTables.js"></script>
     <script src="assets/js/dataTables/dataTables.bootstrap.js"></script>
-      <!-- CUSTOM SCRIPTS  -->
+    <!-- CUSTOM SCRIPTS  -->
     <script src="assets/js/custom.js"></script>
 </body>
+
 </html>
 <?php } ?>
