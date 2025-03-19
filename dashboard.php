@@ -67,7 +67,7 @@ else{?>
                         <?php 
                             $rsts=0;
                             $sid=$_SESSION['stdid'];
-                            $sql2 ="SELECT id from tblissuedbookdetails where StudentID=:sid and (RetrunStatus=:rsts || RetrunStatus is null || RetrunStatus='')";
+                            $sql2 ="SELECT id from tblissuedbookdetails where StudentID=:sid and (ReturnStatus=:rsts || ReturnStatus is null || ReturnStatus='')";
                             $query2 = $dbh -> prepare($sql2);
                             $query2->bindParam(':sid',$sid,PDO::PARAM_STR);
                             $query2->bindParam(':rsts',$rsts,PDO::PARAM_STR);

@@ -241,7 +241,8 @@ else
                                                         $issuedBooks = $result->issuedCount;
                                                         
                                                 echo htmlentities($issuedBooks); ?>)
-                                            </span></label>
+                                             </span>
+                                        </label>
                                         <input class="form-control" type="number" name="quantity" min="1"
                                             value="<?php echo htmlentities($result->BookQuantity); ?>"
                                             required="required" />
