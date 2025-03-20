@@ -40,8 +40,8 @@ if(isset($_POST['update']))
 if ($result) {
     
     $bookAvailQuantity = $result->BookAvailQuantity; // Store the available quantity
-    echo "<script>alert('Error: Book ABAIL QTY -  ($bookAvailQuantity).');</script>";
-    echo "<script>alert('Error: Book TOTAL QTY -  ($quantity).');</script>";
+    // echo "<script>alert('Error: Book ABAIL QTY -  ($bookAvailQuantity).');</script>";
+    // echo "<script>alert('Error: Book TOTAL QTY -  ($quantity).');</script>";
 
 } else {
     $bookAvailQuantity = 0; // Default if book not found
@@ -51,7 +51,7 @@ if ($result) {
     if ($quantity < $issuedBooks) {
         echo "<script>alert('Error: New quantity cannot be less than issued books ($issuedBooks).');</script>";
     } else {
-        echo "<script>alert('Error:PROCEDDING FURTHER ');</script>";
+        // echo "<script>alert('Error:PROCEDDING FURTHER ');</script>";
 
         // Proceed with update
         if($bookAvailQuantity > $quantity){
@@ -61,7 +61,7 @@ if ($result) {
         }else if ($bookAvailQuantity < $quantity){
             $bookAvailQuantity = $quantity - $issuedBooks;
         }
-        echo "<script>alert('Error: Book ABAIL QTY After PROCESS -  ($bookAvailQuantity).');</script>";
+        // echo "<script>alert('Error: Book ABAIL QTY After PROCESS -  ($bookAvailQuantity).');</script>";
         
         $sql = "UPDATE tblbooks SET BookName=:bookname, CatId=:category, AuthorId=:author, ISBNNumber=:isbn, 
                 BookPrice=:price, BookQuantity=:quantity, BookAvailQuantity=:bookAvailQuantity WHERE id=:bookid";
@@ -220,7 +220,7 @@ else
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label>ISBN Number<span style="color:red;">*</span></label>
-                                        <input class="form-control" type="text" name="isbn"
+                                        <input class="form-control" type="number" name="isbn"
                                             value="<?php echo htmlentities($result->ISBNNumber);?>" required />
                                         <p class="help-block">An ISBN is an International Standard Book Number.ISBN Must
                                             be unique</p>
@@ -230,8 +230,8 @@ else
 
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label>Price in USD<span style="color:red;">*</span></label>
-                                        <input class="form-control" type="text" name="price"
+                                        <label>Price in INR<span style="color:red;">*</span></label>
+                                        <input class="form-control" type="number" name="price"
                                             value="<?php echo htmlentities($result->BookPrice);?>"
                                             required="required" />
                                     </div>

@@ -119,7 +119,7 @@ echo "<script>alert('Something went wrong. Please try again');</script>";
 
                                 <div class="form-group">
                                     <label>Mobile Number :</label>
-                                    <input class="form-control" type="tel" name="mobileno" minlength="5" maxlength="15"
+                                    <input class="form-control" type="number" name="mobileno" minlength="5" maxlength="15"
                                         autocomplete="off" required />
                                 </div>
 

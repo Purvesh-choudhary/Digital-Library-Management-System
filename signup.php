@@ -99,12 +99,12 @@ if(isset($_POST['signup']))
                             <form name="signup" method="post" enctype="multipart/form-data" onSubmit="return valid();">
                                 <div class="form-group">
                                     <label>Full Name</label>
-                                    <input class="form-control" type="text" name="fullanme" required />
+                                    <input class="form-control" type="text" pattern="[A-Za-z ]+" title="Only letters and spaces are allowed" name="fullanme" required />
                                 </div>
 
                                 <div class="form-group">
                                     <label>Mobile Number</label>
-                                    <input class="form-control" type="tel" name="mobileno" minlength="5" maxlength="15" required />
+                                    <input class="form-control" type="tel" name="mobileno" pattern="\d{10,13}" title="Please enter a number between 10 and 13 digits (numbers only)" minlength="10" maxlength="13" required />
                                 </div>
 
                                 <div class="form-group">

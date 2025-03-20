@@ -87,7 +87,7 @@ return true;
 
 <div class="form-group">
 <label>Enter Reg Mobile No</label>
-<input class="form-control" type="tel" name="mobile" minlength="5" maxlength="15" required autocomplete="off" />
+<input class="form-control" type="number" name="mobile" minlength="5" maxlength="15" required autocomplete="off" />
 </div>
 
 <div class="form-group">

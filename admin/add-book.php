@@ -179,7 +179,7 @@ foreach($results as $result)
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label>ISBN Number<span style="color:red;">*</span></label>
-                                        <input class="form-control" type="text" name="isbn" id="isbn"
+                                        <input class="form-control" type="number" name="isbn" id="isbn"
                                             required="required" autocomplete="off" onBlur="checkisbnAvailability()" />
                                         <p class="help-block">An ISBN is an International Standard Book Number.ISBN Must
                                             be unique</p>
@@ -190,7 +190,7 @@ foreach($results as $result)
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label>Price<span style="color:red;">*</span></label>
-                                        <input class="form-control" type="text" name="price" autocomplete="off"
+                                        <input class="form-control" type="number" name="price" autocomplete="off"
                                             required="required" />
                                     </div>
                                 </div>

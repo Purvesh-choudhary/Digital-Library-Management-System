@@ -60,7 +60,7 @@ else{
                                             <th>ISBN </th>
                                             <th>Issued Date</th>
                                             <th>Return Date</th>
-                                            <th>Fine in(USD)</th>
+                                            <th>Fine in(INR)</th>
                                         </tr>
                                     </thead>
                                     <tbody>

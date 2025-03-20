@@ -170,7 +170,7 @@ foreach($results as $result)
 <div class="col-md-6">  
  <div class="form-group">
  <label>Price<span style="color:red;">*</span></label>
- <input class="form-control" type="text" name="price" autocomplete="off"   required="required" />
+ <input class="form-control" type="number" name="price" autocomplete="off"   required="required" />
  </div>
 </div>
 

@@ -218,8 +218,8 @@ if(strlen($_SESSION['login'])==0) {
 
                     <p>
                         <label>Phone No:</label>
-                        <!-- <input type="tel" name="mobileno" max="10" id="mobileno" value="<?php echo htmlentities($result->MobileNumber); ?>" disabled required> -->
-                        <input type="tel" name="mobileno" id="mobileno" maxlength="13" pattern="\d{10,13}"
+                        <!-- <input type="number" name="mobileno" max="10" id="mobileno" value="<?php echo htmlentities($result->MobileNumber); ?>" disabled required> -->
+                        <input type="number" name="mobileno" id="mobileno" maxlength="13" pattern="\d{10,13}"
                             title="Phone number must be between 10 and 13 digits"
                             value="<?php echo htmlentities($result->MobileNumber); ?>" required>
 

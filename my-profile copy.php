@@ -120,7 +120,7 @@ foreach($results as $result)
 
                                 <div class="form-group">
                                     <label>Mobile Number :</label>
-                                    <input class="form-control" type="tel" name="mobileno" maxlength="10"
+                                    <input class="form-control" type="number" name="mobileno" maxlength="10"
                                         value="<?php echo htmlentities($result->MobileNumber);?>" autocomplete="off"
                                         required />
                                 </div>
