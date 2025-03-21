@@ -124,7 +124,7 @@ echo "<script>window.location.href='manage-books.php'</script>";
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label>Book Name<span style="color:red;">*</span></label>
-                                        <input class="form-control" type="text" name="bookname" autocomplete="off"
+                                        <input class="form-control" type="text" maxlength="90" name="bookname" autocomplete="off"
                                             required />
                                     </div>
                                 </div>

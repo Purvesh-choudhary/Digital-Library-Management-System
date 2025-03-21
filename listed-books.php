@@ -53,7 +53,7 @@
                             <div class="panel-body">
 
 
-                                <?php $sql = "SELECT tblbooks.BookName,tblcategory.CategoryName,tblauthors.AuthorName,tblbooks.ISBNNumber,tblbooks.BookPrice,tblbooks.id as bookid,tblbooks.bookImage,tblbooks.isIssued from  tblbooks join tblcategory on tblcategory.id=tblbooks.CatId join tblauthors on tblauthors.id=tblbooks.AuthorId";
+                                <?php $sql = "SELECT tblbooks.BookName,tblbooks.BookAvailQuantity,tblcategory.CategoryName,tblauthors.AuthorName,tblbooks.ISBNNumber,tblbooks.BookPrice,tblbooks.id as bookid,tblbooks.bookImage,tblbooks.isIssued from  tblbooks join tblcategory on tblcategory.id=tblbooks.CatId join tblauthors on tblauthors.id=tblbooks.AuthorId";
                                     $query = $dbh -> prepare($sql);
                                     $query->execute();
                                     $results=$query->fetchAll(PDO::FETCH_OBJ);
@@ -69,8 +69,9 @@
                                                     <span><?php echo htmlentities($result->AuthorName);?><br /></span>                                                       <span><?php echo htmlentities($result->CategoryName);?><br /></span>
                                                     <span><?php echo htmlentities($result->ISBNNumber);?><br /></span>
                                                     <span><?php echo htmlentities($result->BookPrice);?><br /></span>
-                                                    <span><?php if($result->isIssued=='1'): ?>
-                                                    <p style="color:red;">Book Already issued</p></span>
+                                                    <span>Available QTY : <?php echo htmlentities($result->BookAvailQuantity);?></span>
+                                                    <span><?php if($result->BookAvailQuantity=='0'): ?>
+                                                    <p style="color:red; float:right; font-weight:bold;">Book Not Available</p></span>
                                             
                                                 <?php endif;?>
                                             </div>

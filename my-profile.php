@@ -6,11 +6,28 @@ error_reporting(0);
 if(strlen($_SESSION['login'])==0) {   
     header('location:index.php');
 } else { 
+
+    
     if(isset($_POST['update'])) {    
         $sid = $_SESSION['stdid'];  
         $fname = $_POST['fullanme'];
         $mobileno = $_POST['mobileno'];
         $email = $_POST['email'];
+
+        // Handle profile image upload
+        if (!empty($_FILES['profileImage']['name'])) {
+        $target_dir = "assets/img/profilePics/"; // Ensure this folder exists
+        $target_file = $target_dir . basename($_FILES["profileImage"]["name"]);
+        
+        if (move_uploaded_file($_FILES["profileImage"]["tmp_name"], $target_file)) {
+            $sql = "UPDATE tblstudents SET ProfilePic=:profilePic WHERE StudentId=:sid";
+            $query = $dbh->prepare($sql);
+            $query->bindParam(':profilePic', $target_file, PDO::PARAM_STR);
+            $query->bindParam(':sid', $sid, PDO::PARAM_STR);
+            $query->execute();
+        }
+    }
+
 
         $sql = "UPDATE tblstudents SET FullName=:fname, MobileNumber=:mobileno, EmailId=:email WHERE StudentId=:sid";
         $query = $dbh->prepare($sql);
@@ -76,6 +93,7 @@ if(strlen($_SESSION['login'])==0) {
         border: 4px solid #9170e4;
         border-radius: 50%;
         display: flex;
+        position: relative;
         justify-content: center;
         align-items: center;
         font-size: 40px;
@@ -95,6 +113,7 @@ if(strlen($_SESSION['login'])==0) {
 
     .profile-details {
         flex: 1;
+        float:left:
     }
 
     .profile-details p {
@@ -153,6 +172,25 @@ if(strlen($_SESSION['login'])==0) {
 
     }
 
+    #editImageIcon {
+        /* border:2px solid red; */
+        position: absolute;
+    top: 10px;
+    right: 10px;
+    background: white;
+    color: black;
+    font-size: 20px;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.62);
+
+    }
+
     /* .profile-details p:hover .edit-icon {
         display: inline;
     }
@@ -199,21 +237,23 @@ if(strlen($_SESSION['login'])==0) {
             if ($result) {
         ?>
 
-        <div class="profile-content">
-            <div class="profile-img">
-                <img src="<?php echo htmlentities($result->ProfilePic); ?>" width="100" alt="Profile Image">
+            <div class="profile-content">
+            <form method="POST" enctype="multipart/form-data">
+            <div class="profile-img" style="float:left;">
+                <img id="profilePic" src="<?php echo htmlentities($result->ProfilePic); ?>" width="100"
+                    alt="Profile Image">
+                <input type="file" id="imageUpload" name="profileImage" accept="image/*" style="display: none;">
+                <span class="edit-icon" id="editImageIcon">✎</span>
             </div>
-
-            <form method="POST">
-                <div class="profile-details">
+            <div class="profile-details" style="float:left;">
                     <p>
                         <!-- <label>Full Name:</label> -->
-                        <h3>
-                            <input type="text" name="fullanme" id="fullanme"
-                                value="<?php echo htmlentities($result->FullName); ?>" required>
-                        </h3>
+                    <h3>
+                        <input type="text" name="fullanme" id="fullanme"
+                            value="<?php echo htmlentities($result->FullName); ?>" required>
+                    </h3>
 
-                        <span class="edit-icon" onclick="enableEdit('fullanme')">✎</span>
+                    <span class="edit-icon" onclick="enableEdit('fullanme')">✎</span>
                     </p>
 
                     <p>
@@ -261,7 +301,23 @@ if(strlen($_SESSION['login'])==0) {
         document.getElementById(id).removeAttribute("disabled");
         document.getElementById(id).focus();
     }
+
+    document.getElementById("editImageIcon").addEventListener("click", function() {
+        document.getElementById("imageUpload").click();
+    });
+
+    document.getElementById("imageUpload").addEventListener("change", function(event) {
+        let file = event.target.files[0];
+        if (file) {
+            let reader = new FileReader();
+            reader.onload = function(e) {
+                document.getElementById("profilePic").src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+    });
     </script>
+
 
     <script src="assets/js/jquery-1.10.2.js"></script>
     <script src="assets/js/bootstrap.js"></script>
