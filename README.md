@@ -36,8 +36,8 @@ Welcome to the **Library Management System**, a web-based platform designed to m
 ## 🔧 Setup Instructions  
 1️⃣ **Clone the Repository**  
 ```sh
-git clone https://github.com/yourusername/library-management.git
-cd library-management
+git clone https://github.com/Purvesh-choudhary/Digital-Library-Management-System.git
+cd Digital-Library-Management-System
 ```  
 
 2️⃣ **Set Up Database**  
