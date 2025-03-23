@@ -84,8 +84,19 @@ else{?>
                 <a href="issued-books.php">
                     <div class="col-md-4 col-sm-4 col-xs-6">
                         <div class="alert alert-success back-widget-set text-center">
+                        <?php 
+                            $rsts=0;
+                            $sid=$_SESSION['stdid'];
+                            $sql2 ="SELECT id from tblissuedbookdetails where StudentID=:sid";
+                            $query2 = $dbh -> prepare($sql2);
+                            $query2->bindParam(':sid',$sid,PDO::PARAM_STR);
+                            $query2->execute();
+                            $results2=$query2->fetchAll(PDO::FETCH_OBJ);
+                            $issuedbookstotal=$query2->rowCount();
+                        ?>
                             <i class="fa fa-book fa-5x"></i>
-                            <h3>&nbsp;</h3>
+                            <h3><?php echo htmlentities($issuedbookstotal);?></h3>
+
                             Issued Books
                         </div>
                     </div>
